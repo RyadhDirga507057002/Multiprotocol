@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Module Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: whitesmoke;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            max-width: 120px;
+            height: auto;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+
+        .logo::before {
+            font-size: 30px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-btn {
+            color: black;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgb(231, 224, 224);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            color: #4ecdc4;
+            background: white;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #4ecdc4;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab-content {
+            padding: 40px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+
+        .form-input:hover {
+            border-color: #4ecdc4;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .input-group .form-input {
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ff0000;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: whitesmoke;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgb(255, 0, 0) 0%, rgb(0, 0, 0) 120%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h4 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 15px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav-tab {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <?xml version="1.0" encoding="UTF-8"?>
+                <svg viewBox="0 0 300 87" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0 C1.11375 0.433125 2.2275 0.86625 3.375 1.3125 C6.37492729 0.02105022 6.37492729 0.02105022 9.375 -1.6875 C15.94774388 -2.31347561 20.95026257 -1.42728995 26.25 2.8125 C28.74390839 6.13771119 28.50376031 9.49209973 28.5078125 13.4765625 C28.50910156 14.68054688 28.51039063 15.88453125 28.51171875 17.125 C28.50785156 18.383125 28.50398438 19.64125 28.5 20.9375 C28.50580078 22.83628906 28.50580078 22.83628906 28.51171875 24.7734375 C28.51042969 25.97484375 28.50914062 27.17625 28.5078125 28.4140625 C28.50668457 29.52088379 28.50555664 30.62770508 28.50439453 31.76806641 C28.375 34.3125 28.375 34.3125 27.375 35.3125 C25.5625 35.4453125 25.5625 35.4453125 23.375 35.4375 C22.653125 35.44007812 21.93125 35.44265625 21.1875 35.4453125 C19.375 35.3125 19.375 35.3125 18.375 34.3125 C18.22947268 32.54516824 18.14777531 30.77249006 18.09375 29 C18.03767578 27.38738281 18.03767578 27.38738281 17.98046875 25.7421875 C17.875 22.3125 17.875 22.3125 17.76953125 18.8828125 C17.71345703 17.27019531 17.71345703 17.27019531 17.65625 15.625 C17.62595703 14.63113281 17.59566406 13.63726562 17.56445312 12.61328125 C17.62772441 10.34966014 17.62772441 10.34966014 16.375 9.3125 C14.04202567 9.27157063 11.70794775 9.27008277 9.375 9.3125 C9.35518066 9.99352783 9.33536133 10.67455566 9.31494141 11.3762207 C9.21973017 14.45953917 9.11003534 17.54217649 9 20.625 C8.9690625 21.69685547 8.938125 22.76871094 8.90625 23.87304688 C8.86757812 24.90107422 8.82890625 25.92910156 8.7890625 26.98828125 C8.7576416 27.93614502 8.7262207 28.88400879 8.69384766 29.8605957 C8.375 32.3125 8.375 32.3125 6.375 35.3125 C2.8125 35.5625 2.8125 35.5625 -0.625 35.3125 C-2.26113144 33.67636856 -1.83008961 31.7638615 -1.90625 29.5078125 C-1.94363281 28.53199219 -1.98101562 27.55617188 -2.01953125 26.55078125 C-2.05433594 25.52339844 -2.08914062 24.49601562 -2.125 23.4375 C-2.19389507 21.41912955 -2.26664311 19.40088592 -2.34375 17.3828125 C-2.37404297 16.48320801 -2.40433594 15.58360352 -2.43554688 14.65673828 C-2.54350059 12.15903157 -2.54350059 12.15903157 -3.625 9.3125 C-5.95794775 9.27008277 -8.29202567 9.27157063 -10.625 9.3125 C-12.33486752 11.02236752 -11.83500296 13.28749058 -11.90625 15.625 C-11.94363281 16.70007813 -11.98101562 17.77515625 -12.01953125 18.8828125 C-12.05433594 20.01460937 -12.08914062 21.14640625 -12.125 22.3125 C-12.19355494 24.54180507 -12.2662424 26.77098824 -12.34375 29 C-12.38918945 30.49080078 -12.38918945 30.49080078 -12.43554688 32.01171875 C-12.625 34.3125 -12.625 34.3125 -13.625 35.3125 C-15.4375 35.4453125 -15.4375 35.4453125 -17.625 35.4375 C-18.346875 35.44007812 -19.06875 35.44265625 -19.8125 35.4453125 C-21.625 35.3125 -21.625 35.3125 -22.625 34.3125 C-22.93609572 29.92411937 -22.90354704 25.52303989 -22.9375 21.125 C-22.96650391 19.89201172 -22.99550781 18.65902344 -23.02539062 17.38867188 C-23.10572798 5.93750902 -23.10572798 5.93750902 -18.625 1.3125 C-12.24331698 -2.3692402 -6.64331234 -3.09257643 0 0 Z " fill="#323232" transform="translate(197.625,33.6875)"/>
+                <path d="M0 0 C1.62131836 -0.0299707 1.62131836 -0.0299707 3.27539062 -0.06054688 C9.54047179 -0.05670091 13.4684832 0.16455942 18.1875 4.4375 C21.97064881 9.60780337 21.97473354 15.2738192 21.1875 21.4375 C19.93948384 25.5455532 17.94258009 27.91733371 14.375 30.375 C8.44960053 32.51545267 1.40632303 31.6535981 -4.8125 31.4375 C-4.80089844 32.43652344 -4.78929688 33.43554688 -4.77734375 34.46484375 C-4.76832031 35.75519531 -4.75929688 37.04554687 -4.75 38.375 C-4.73839844 39.66277344 -4.72679688 40.95054688 -4.71484375 42.27734375 C-4.8125 45.4375 -4.8125 45.4375 -5.8125 46.4375 C-7.625 46.5703125 -7.625 46.5703125 -9.8125 46.5625 C-10.534375 46.56507812 -11.25625 46.56765625 -12 46.5703125 C-13.8125 46.4375 -13.8125 46.4375 -14.8125 45.4375 C-14.93854257 42.37008218 -15.00120085 39.32643175 -15.015625 36.2578125 C-15.02132507 35.33410858 -15.02702515 34.41040466 -15.03289795 33.45870972 C-15.04236345 31.49999137 -15.04888806 29.54125698 -15.05273438 27.58251953 C-15.0624367 24.58207452 -15.09344401 21.5823152 -15.125 18.58203125 C-15.13153002 16.68229575 -15.1367805 14.78255533 -15.140625 12.8828125 C-15.1529718 11.98273468 -15.1653186 11.08265686 -15.17803955 10.15530396 C-15.1735379 8.89917801 -15.1735379 8.89917801 -15.16894531 7.61767578 C-15.17259094 6.88122833 -15.17623657 6.14478088 -15.17999268 5.38601685 C-13.82517916 -1.79746497 -5.5624959 -0.03609879 0 0 Z M-4.8125 10.4375 C-4.8125 14.0675 -4.8125 17.6975 -4.8125 21.4375 C-2.68777424 21.49136629 -0.56266348 21.53023071 1.5625 21.5625 C3.33753906 21.59730469 3.33753906 21.59730469 5.1484375 21.6328125 C8.29903817 21.76616229 8.29903817 21.76616229 10.1875 19.4375 C10.42962873 17.45621492 10.42962873 17.45621492 10.3125 15.3125 C10.27125 14.03375 10.23 12.755 10.1875 11.4375 C5.61679396 9.15214698 -0.05878427 8.06064214 -4.8125 10.4375 Z " fill="#323232" transform="translate(83.8125,22.5625)"/>
+                <path d="M0 0 C3.43888472 1.75070495 4.54108818 2.52415939 6.4375 5.75 C7.05759874 9.70626741 6.90104885 13.68781817 6.875 17.6875 C6.9049707 19.31461914 6.9049707 19.31461914 6.93554688 20.97460938 C6.93066927 28.91047496 6.93066927 28.91047496 4.57421875 32.921875 C-0.69490189 37.43000747 -6.95977278 37.26192031 -13.5625 36.75 C-17.57920941 36.08304639 -21.08396721 35.19240665 -23.5625 31.75 C-24.8063276 28.0185172 -25.2268142 24.61908268 -24.5625 20.75 C-22.60232364 17.22319621 -20.45550657 15.04766886 -16.5625 13.75 C-14.33431559 13.68062938 -12.10415476 13.66542916 -9.875 13.6875 C-8.10576172 13.70103516 -8.10576172 13.70103516 -6.30078125 13.71484375 C-5.39714844 13.72644531 -4.49351562 13.73804688 -3.5625 13.75 C-4.2225 12.1 -4.8825 10.45 -5.5625 8.75 C-10.5125 8.42 -15.4625 8.09 -20.5625 7.75 C-20.5625 5.44 -20.5625 3.13 -20.5625 0.75 C-14.57372605 -2.82900539 -6.44840191 -2.1893461 0 0 Z M-12.5625 21.75 C-13.2225 23.07 -13.8825 24.39 -14.5625 25.75 C-12.62015911 28.13785276 -12.62015911 28.13785276 -9.0625 27.9375 C-5.71285297 27.99131237 -5.71285297 27.99131237 -3.5625 26.75 C-3.5625 25.1 -3.5625 23.45 -3.5625 21.75 C-6.5325 21.75 -9.5025 21.75 -12.5625 21.75 Z " fill="#323232" transform="translate(252.5625,33.25)"/>
+                <path d="M0 0 C3.05228483 -0.29348893 5.95531533 -0.41614202 9 0 C12.40494089 3.04652606 14.0858627 6.8846048 16 11 C16.66 11 17.32 11 18 11 C19.55899937 8.7840167 19.55899937 8.7840167 21.0625 6.0625 C23.94039735 1.05960265 23.94039735 1.05960265 25 0 C26.51928038 -0.07179964 28.04167482 -0.08392007 29.5625 -0.0625 C30.38878906 -0.05347656 31.21507812 -0.04445312 32.06640625 -0.03515625 C32.70449219 -0.02355469 33.34257812 -0.01195312 34 0 C33.70562604 5.5931052 31.19898095 9.08136582 28.08203125 13.53515625 C26.72602622 15.94534198 26.72602622 15.94534198 27.59375 18.42578125 C29.79842246 22.46155667 32.20787612 26.35414159 34.63671875 30.2578125 C36 33 36 33 35 36 C27.73684211 36.48421053 27.73684211 36.48421053 24.8125 34.5625 C22.21055527 30.88388848 20.08125833 26.99192171 18 23 C17.34 23 16.68 23 16 23 C14.73792297 24.93246436 13.56359129 26.92276047 12.4375 28.9375 C9.06149733 34.93850267 9.06149733 34.93850267 8 36 C6.48071962 36.07179964 4.95832518 36.08392007 3.4375 36.0625 C2.61121094 36.05347656 1.78492188 36.04445312 0.93359375 36.03515625 C0.29550781 36.02355469 -0.34257812 36.01195312 -1 36 C-1.33 35.34 -1.66 34.68 -2 34 C-0.890625 31.57421875 -0.890625 31.57421875 0.75 28.6875 C1.28109375 27.74261719 1.8121875 26.79773438 2.359375 25.82421875 C3.44541325 23.95468147 4.57037871 22.10717747 5.734375 20.28515625 C7.28056486 18.08895512 7.28056486 18.08895512 6.5 15.75 C5.59891996 14.09801992 4.68397472 12.45333515 3.7421875 10.82421875 C3.29101562 10.03660156 2.83984375 9.24898437 2.375 8.4375 C1.92898438 7.69371094 1.48296875 6.94992188 1.0234375 6.18359375 C0 4 0 4 0 0 Z " fill="#323232" transform="translate(263,33)"/>
+                <path d="M0 0 C0 2.97 0 5.94 0 9 C-5.28 8.67 -10.56 8.34 -16 8 C-16 8.66 -16 9.32 -16 10 C-15.43152344 10.17015625 -14.86304688 10.3403125 -14.27734375 10.515625 C-2.21722365 14.30077121 -2.21722365 14.30077121 1.4375 18.75 C2.67673855 23.70695419 2.87224356 27.45679986 0.375 31.875 C-4.60945627 36.33477666 -9.88912928 36.30817001 -16.296875 36.203125 C-19.79212185 35.94047639 -22.70499574 35.17155707 -26 34 C-27.125 27.25 -27.125 27.25 -26 25 C-20.06 25.33 -14.12 25.66 -8 26 C-11.51195413 22.48804587 -14.77932084 21.2460759 -19.30859375 19.37890625 C-22.20725161 17.89381739 -23.98224268 16.55394457 -26 14 C-26.4609375 11.78125 -26.4609375 11.78125 -26.375 9.5 C-26.36210937 8.7471875 -26.34921875 7.994375 -26.3359375 7.21875 C-25.9587589 4.72761693 -25.37918088 3.10933546 -24 1 C-16.18807319 -2.90596341 -8.14432968 -3.42919145 0 0 Z " fill="#323232" transform="translate(170,34)"/>
+                <path d="M0 0 C2.52588702 2.36292656 3.88820837 3.66462511 5 7 C4.04480469 7.47308594 3.08960938 7.94617187 2.10546875 8.43359375 C-11.03139961 15.08644634 -20.83349707 22.48114881 -29 35 C-32.3 33.35 -35.6 31.7 -39 30 C-39 24.41557607 -33.71733582 20.72389053 -29.953125 16.9453125 C-21.25585168 8.78765103 -11.31567232 3.58626623 0 0 Z " fill="#FF0000" transform="translate(43,27)"/>
+                <path d="M0 0 C2.54106009 2.20961747 3.30621489 3.73988358 4 7 C2.93072266 7.70962891 2.93072266 7.70962891 1.83984375 8.43359375 C-8.2741084 15.4167128 -13.95692742 22.86805639 -19 34 C-22.3523301 32.74361009 -25.30402615 31.31266112 -28.3125 29.375 C-29.00988281 28.92898437 -29.70726562 28.48296875 -30.42578125 28.0234375 C-30.94527344 27.68570313 -31.46476562 27.34796875 -32 27 C-25.84562403 14.13175933 -13.18449828 4.87412136 0 0 Z " fill="#FF0000" transform="translate(49,37)"/>
+                <path d="M0 0 C2.56687367 3.8503105 1.83288724 5.58569763 1 10 C-0.7015625 10.2165625 -0.7015625 10.2165625 -2.4375 10.4375 C-5.80777201 10.61171478 -5.80777201 10.61171478 -7 12 C-7.14534652 13.68253584 -7.22717622 15.37065758 -7.28125 17.05859375 C-7.31863281 18.08404297 -7.35601562 19.10949219 -7.39453125 20.16601562 C-7.42933594 21.24560547 -7.46414062 22.32519531 -7.5 23.4375 C-7.56871615 25.56133798 -7.64143333 27.68505147 -7.71875 29.80859375 C-7.76418945 31.22869751 -7.76418945 31.22869751 -7.81054688 32.67749023 C-8 35 -8 35 -9 37 C-15.15234375 37.09765625 -15.15234375 37.09765625 -17 37 C-19.74811708 34.25188292 -18.23537149 25.95101427 -18.25 22.25 C-18.270625 20.9609375 -18.29125 19.671875 -18.3125 18.34375 C-18.31765625 17.10109375 -18.3228125 15.8584375 -18.328125 14.578125 C-18.3374707 13.43762695 -18.34681641 12.29712891 -18.35644531 11.12207031 C-17.95665521 7.62034714 -17.12564255 5.78843743 -15 3 C-9.8320906 0.06138485 -5.79456331 -0.58927762 0 0 Z " fill="#323232" transform="translate(126,32)"/>
+                <path d="M0 0 C0.721875 0.00257812 1.44375 0.00515625 2.1875 0.0078125 C2.909375 0.00523438 3.63125 0.00265625 4.375 0 C6.1875 0.1328125 6.1875 0.1328125 7.1875 1.1328125 C7.28837212 3.64205403 7.32722032 6.12317634 7.3203125 8.6328125 C7.32126923 9.38369141 7.32222595 10.13457031 7.32321167 10.90820312 C7.32389338 12.49869877 7.32203972 14.08919717 7.31787109 15.6796875 C7.31252267 18.12245905 7.31781634 20.56504671 7.32421875 23.0078125 C7.32355797 24.54947957 7.3222768 26.09114653 7.3203125 27.6328125 C7.32233673 28.36822266 7.32436096 29.10363281 7.32644653 29.86132812 C7.30245161 35.01786089 7.30245161 35.01786089 6.1875 36.1328125 C4.375 36.265625 4.375 36.265625 2.1875 36.2578125 C1.465625 36.26039062 0.74375 36.26296875 0 36.265625 C-1.8125 36.1328125 -1.8125 36.1328125 -2.8125 35.1328125 C-2.91337212 32.62357097 -2.95222032 30.14244866 -2.9453125 27.6328125 C-2.94626923 26.88193359 -2.94722595 26.13105469 -2.94821167 25.35742188 C-2.94889338 23.76692623 -2.94703972 22.17642783 -2.94287109 20.5859375 C-2.93752267 18.14316595 -2.94281634 15.70057829 -2.94921875 13.2578125 C-2.94855797 11.71614543 -2.9472768 10.17447847 -2.9453125 8.6328125 C-2.94733673 7.89740234 -2.94936096 7.16199219 -2.95144653 6.40429688 C-2.92264193 0.21415911 -2.92264193 0.21415911 0 0 Z " fill="#323232" transform="translate(132.8125,32.8671875)"/>
+                <path d="M0 0 C2.87402727 2.5958956 4.24432948 4.21369298 5 8 C-15.87096774 21 -15.87096774 21 -19 21 C-15.91296827 11.88513263 -7.79494319 5.2249483 0 0 Z " fill="#FF0000" transform="translate(54,46)"/>
+                <path d="M0 0 C2 2 2 2 2.3125 4.9375 C2 8 2 8 0.875 9.875 C-1.88090884 11.52854531 -3.85075452 11.39365568 -7 11 C-8.875 9.875 -8.875 9.875 -10 8 C-10.4375 5 -10.4375 5 -10 2 C-6.94783427 -1.63912068 -4.35383535 -1.23043173 0 0 Z " fill="#323232" transform="translate(139,18)"/>
+                <path d="M0 0 C3.3 0.99 6.6 1.98 10 3 C10 3.99 10 4.98 10 6 C7.3125 8.3125 7.3125 8.3125 4 10 C1.25 9.3125 1.25 9.3125 -1 8 C-1.66 7.67 -2.32 7.34 -3 7 C-2.38722388 4.03824877 -1.74627478 2.61941217 0 0 Z " fill="#FF0000" transform="translate(15,26)"/>
+                <path d="M0 0 C1.65 0.99 3.3 1.98 5 3 C3.35 4.65 1.7 6.3 0 8 C-0.99 7.67 -1.98 7.34 -3 7 C-2.25 2.25 -2.25 2.25 0 0 Z " fill="#FF0000" transform="translate(10,35)"/>
+                <path d="M0 0 C0.66 0 1.32 0 2 0 C1.52797514 4.24822374 -0.96655518 6.19989709 -4 9 C-3.4739075 5.21213403 -2.61896089 2.82847776 0 0 Z " fill="#FF0000" transform="translate(4,45)"/>
+                </svg>
+        </div>
+        <div class="header-actions">
+            <a href="/logout" class="header-btn">Log out</a>
+            <a href="/reboot" class="header-btn">Reboot</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+
+
+            <form id="configForm" action="/save" method="post" enctype="multipart/form-data">
+                <!-- MQTT Configuration Tab -->
+                <div class="tab-content">
+                    <h2 class="section-title">MQTT Configuration</h2>
+                    <p class="section-subtitle">Configure your WiFi and MQTT broker settings</p>
+                    
+                    <div class="info-card">
+                        <h4>Network Settings</h4>
+                        <p>Set up your WiFi connection and MQTT broker details for data transmission.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="ssid">WiFi SSID</label>
+                            <input type="text" id="ssid" name="ssid" class="form-input" placeholder="Enter WiFi network name" value="{{ssid}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="password">WiFi Password</label>
+                            <input type="text" id="password" name="password" class="form-input" placeholder="Enter WiFi password" value="{{password}}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="broker">MQTT Broker</label>
+                            <input type="text" id="broker" name="broker" class="form-input" placeholder="broker.example.com" value="{{broker}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="port">MQTT Port</label>
+                            <input type="number" id="port" name="port" class="form-input" placeholder="1883" value="{{port}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="espId">ESP32 ID</label>
+                            <input type="text" id="espId" name="espId" class="form-input" placeholder="ESP32_001" value="{{espId}}" required>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Radio Configuration</h2>
+                    <p class="section-subtitle">Configure radio frequency and receiver settings</p>
+                    
+                    <div class="info-card">
+                        <h4>Radio Settings</h4>
+                        <p>Configure your radio receiver ID and transmission frequencies.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="receiverId">Receiver ID</label>
+                            <input type="text" id="receiverId" name="receiverId" class="form-input" placeholder="RX_001" value="{{receiverId}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="timeSlot">Time Slot</label>
+                            <input type="text" id="timeSlot" name="timeSlot" class="form-input" placeholder="1" value="{{timeSlot}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="colourCode">Colour Code</label>
+                            <input type="text" id="colourCode" name="colourCode" class="form-input" placeholder="1" value="{{colourCode}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Frequency Settings (MHz)</label>
+                            <div class="input-group">
+                                <input type="number" id="frRX" name="frRX" class="form-input" placeholder="433.92 (RX Frequency)" step="0.01" value="{{frRX}}" required>
+                                <input type="number" id="frTX" name="frTX" class="form-input" placeholder="434.42 (TX Frequency)" step="0.01" value="{{frTX}}" required>
+                                <button type="submit" class="btn btn-secondary" formaction="/test" formmethod="post" style="min-width:100px; align-self:center;">Test</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Sensor Settings</h2>
+                    <p class="section-subtitle">Configure sensor communication and system time</p>
+                    
+                    <div class="info-card">
+                        <h4>Sensor Configuration</h4>
+                        <p>Set up your RS485/RS232 communication and system time settings.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="rs485">RS485 Baud Rate</label>
+                            <input type="number" id="rs485" name="rs485" class="form-input" placeholder="9600" value="{{rs485}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="rs232">RS232 Baud Rate</label>
+                            <input type="number" id="rs232" name="rs232" class="form-input" placeholder="9600" value="{{rs232}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">System Time</label>
+                            <div class="input-group">
+                                <input type="time" id="time" name="time" class="form-input" value="{{time}}" required>
+                                <input type="date" id="date" name="date" class="form-input" value="{{date}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="update">Upload Firmware File</label>
+                            <input type="file" id="update" name="update" class="form-input" accept=".bin">
+                        </div>
+                    </div>
+					
+                    <div class="button-group">
+                        <button type="reset" class="btn btn-secondary">
+                            Reset Configuration
+                        </button>
+                        <div style="display: flex; gap: 15px;">
+                            <button type="submit" class="btn btn-success">
+                                Save Configuration
+                            </button>
+                            <button type="submit" method="POST" class="btn btn-danger" action="/update" enctype="multipart/form-data" value="Upload Firmware">
+                                Upload Firmware
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+			
+        </div>
+    </div>
+</body>
+</html>
