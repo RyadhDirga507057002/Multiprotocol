@@ -24,4 +24,6 @@ private:
     SerialHandler serial;
     SemaphoreHandle_t logMutex;
     IOHandler io{0x20, 21, 22}; // Contoh alamat I2C dan pin SDA/SCL
+    String last232Data;
+    String last485Data;
 };
