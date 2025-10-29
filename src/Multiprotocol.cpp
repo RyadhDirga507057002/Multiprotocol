@@ -54,4 +54,5 @@ void MultiProtocol::save()
             xSemaphoreGive(logMutex);
         }
     }
+    
 }
