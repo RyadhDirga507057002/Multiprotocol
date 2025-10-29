@@ -1,19 +1,18 @@
 #include "MultiProtocol.h"
 
 void MultiProtocol::init() {
-    mqttHandler.init();
-    serialHandler.init();
-    if (ioHandler.begin()) {
-        Serial.println("[MultiProtocol] IOHandler initialized successfully.");
-    } else {
-        Serial.println("[MultiProtocol] IOHandler initialization failed.");
-    }
+    io.begin();
+    mqtt.init();
+    serial.init();
+    time.init();
+    storage.init();
+    logMutex = xSemaphoreCreateMutex();
+
+    
 }
 
 void MultiProtocol::run() {
-    serialHandler.handle232();
-    serialHandler.handle485();
-    mqttHandler.handle();
+    
 }
 
 void MultiProtocol::save() {

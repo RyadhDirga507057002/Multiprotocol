@@ -4,22 +4,26 @@
 
 MultiProtocol multiProtocol;
 
-void TaskRun(void *pvParameters) {
-    esp_task_wdt_init(30, true); // Inisialisasi watchdog dengan timeout 30 detik
-    multiProtocol.init();
-
-    while (true) {
-        esp_task_wdt_reset(); // Reset watchdog
-        multiProtocol.run();
-        vTaskDelay(10 / portTICK_PERIOD_MS); // Delay untuk menghindari penggunaan CPU 100%
-    }
+void TaskRun(void *pvParameters)
+{
+  esp_task_wdt_add(NULL);
+  while (1)
+  {
+    multiProtocol.run();
+    esp_task_wdt_reset();            // Reset watchdog timer
+    vTaskDelay(pdMS_TO_TICKS(1500)); // Delay 1 second
+  }
 }
 
-void TaskSave(void *pvParameters) {
-    while (true) {
-        vTaskDelay(60000 / portTICK_PERIOD_MS); // Simpan setiap 60 detik
-        multiProtocol.save();
-    }
+void TaskSave(void *pvParameters)
+{
+  esp_task_wdt_add(NULL);
+  while (1)
+  {
+    multiProtocol.save();
+    esp_task_wdt_reset();            // Reset watchdog timer
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay 1 second
+  }
 }
 
 void setup() {
