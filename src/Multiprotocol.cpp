@@ -12,14 +12,11 @@ void MultiProtocol::init()
 
 void MultiProtocol::run()
 {
-    if (mqtt.isConnected())
+    if (mqtt.isConnected() && (xSemaphoreTake(logMutex, portMAX_DELAY)))
     {
-        if (xSemaphoreTake(logMutex, portMAX_DELAY))
-        {
-            String data = storage.readFile("log.txt", 1);
-            String topic = "MultiProtocol/";
-            mqtt.publish(topic.c_str(), data.c_str());
-        }
+        String data = storage.readFile("log.txt", 1);
+        String topic = "MultiProtocol/";
+        mqtt.publish(topic.c_str(), data.c_str());
     }
     else
     {
@@ -46,13 +43,10 @@ void MultiProtocol::save()
     }
 
     String logEntry = time.getFormattedTime() + ",RS232:" + last232Data + ",RS485:" + last485Data + "\n";
-    if (new232.length() > 0 || new485.length() > 0)
+
+    if (new232.length() > 0 || new485.length() > 0 && xSemaphoreTake(logMutex, portMAX_DELAY))
     {
-        if (xSemaphoreTake(logMutex, portMAX_DELAY))
-        {
-            storage.logData(logEntry);
-            xSemaphoreGive(logMutex);
-        }
+        storage.logData(logEntry);
+        xSemaphoreGive(logMutex);
     }
-    
 }

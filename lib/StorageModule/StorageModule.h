@@ -1,5 +1,7 @@
 #pragma once
 #include <Arduino.h>
+#include <SD.h>
+#include "main_config.h"
 
 class StorageModule {
 public:
@@ -11,5 +13,4 @@ private:
   void checkCard();
   bool cardOK = false;
 
-  #define SD_CS_PIN 5  // Ganti sesuai wiring
 };
